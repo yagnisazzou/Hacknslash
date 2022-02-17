@@ -30,35 +30,30 @@ public class PlayerMovement : MonoBehaviour
         MovePlayer();
     }
 
-
-    void UpdateMovement ()
-    {
-        Debug.Log(GetMovementInput());
-    }
-
     void MovePlayer ()
     {
         Vector2 moveInput = GetMovementInput();
+        
 
         float xSpeed = speed.x;
         float ySpeed = speed.y;
         if (moveInput.x > 0 && speed.x < maxSpeed)
         {
-            xSpeed = speed.x + acceleration * Time.deltaTime;
+            xSpeed = addAcceleration(speed.x, acceleration);            
         }
         else if (moveInput.x < 0 && speed.x > -maxSpeed)
         {
-            xSpeed = speed.x - acceleration * Time.deltaTime;
+            xSpeed = addAcceleration(speed.x, -acceleration);            
         }
         else
         {
             if (speed.x > deceleration * Time.deltaTime)
             {
-                xSpeed = speed.x - deceleration * Time.deltaTime;
+                xSpeed = addDeceleration(speed.x, -deceleration);                
             }
             else if (speed.x < -deceleration * Time.deltaTime)
             {
-                xSpeed = speed.x + deceleration * Time.deltaTime;
+                xSpeed = addDeceleration(speed.x, deceleration);                
             }
             else
             {
@@ -68,21 +63,21 @@ public class PlayerMovement : MonoBehaviour
 
         if (moveInput.y > 0 && speed.y < maxSpeed)
         {
-            ySpeed = speed.y + acceleration * Time.deltaTime;
+            ySpeed = addAcceleration(speed.y, acceleration);            
         }
         else if (moveInput.y < 0 && speed.y > -maxSpeed)
         {
-            ySpeed = speed.y - acceleration * Time.deltaTime;
+            ySpeed = addAcceleration(speed.y, -acceleration);
         }
         else
         {
             if (speed.y > deceleration * Time.deltaTime)
             {
-                ySpeed = speed.y - deceleration * Time.deltaTime;
+                ySpeed = addDeceleration(speed.y, -deceleration);                
             }
             else if (speed.y < -deceleration * Time.deltaTime)
             {
-                ySpeed = speed.y + deceleration * Time.deltaTime;
+                ySpeed = addDeceleration(speed.y, deceleration);    
             }
             else
             {
@@ -123,4 +118,13 @@ public class PlayerMovement : MonoBehaviour
         return new Vector2(xAxis, yAxis);
     }
 
+    float addAcceleration(float speed, float acceleration)
+    {
+        return speed + acceleration * Time.deltaTime;
+    }
+
+    float addDeceleration(float speed, float deceleration)
+    {
+        return speed + deceleration * Time.deltaTime;
+    }
 }
