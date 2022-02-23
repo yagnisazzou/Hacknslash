@@ -33,7 +33,7 @@ public class PlayerSlash : MonoBehaviour
 
         foreach (Collider2D enemy in enemiesHit)
         {
-            Debug.Log("HIT " + enemy.name);
+            enemy.GetComponent<Enemy>().TakeDamage(1);
         }
 
     }
